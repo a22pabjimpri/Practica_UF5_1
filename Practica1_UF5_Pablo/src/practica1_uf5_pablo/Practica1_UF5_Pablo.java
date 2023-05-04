@@ -11,18 +11,26 @@ public class Practica1_UF5_Pablo {
         boolean sortir = false;
 
         do {
-            int opcio = Utils.LlegirInt("Selecciona una opcio");
+            int opcio = Utils.LlegirInt("Selecciona una opcio: ");
 
             switch (opcio) {
-                case 1: 
+                case 1 -> {
                     divisio();
-                    break;                  
-                case 2:
+                }
+                case 2 -> {
+                    figura();
+                }
 
-                case 3:
+                case 3 -> {
+                    calculadora();
+                }
+                case 4 -> {
+                    sortir = true;
+                }
 
-                default:
+                default -> {
                     System.out.println("Opcio no valida");
+                }
 
             }
 
@@ -50,11 +58,74 @@ public class Practica1_UF5_Pablo {
                 System.out.println("Has d'introduir un numero enter valid");
 
             } catch (ArithmeticException e) {
-                System.out.println("No es pot dividir entre 0");
-
+                System.out.println(e.getMessage());
             }
 
         }
+
+    }
+
+    public static void figura() {
+        int costats;
+        costats = Utils.LlegirInt("Quants costats vols: ");
+        int[] longitud = new int[costats];
+        for (int i = 0; i < longitud.length; i++) {
+            longitud[i] = Utils.LlegirInt("Longitud del costat: ");
+        }
+
+        try {
+            Figura figura = new Figura(costats, longitud);
+            System.out.println("Longitud del perimetre: " + figura.perimetre());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    private static void calculadora() {
+        boolean sortir = false;
+        String operacio;
+        int operand1 = 0;
+        int operand2 = 0;
+
+        do {
+            System.out.print("Quina operacio vols fer: ");
+            operacio = input.next();
+
+            if (operacio.equalsIgnoreCase("z")) {
+                sortir = true;
+                System.out.println("Fins aviat");
+            } else {
+                try {
+                    operand1 = Utils.LlegirInt("Primer numero ");
+                    operand2 = Utils.LlegirInt("Segon numero ");
+                    try {
+                        Calculadora calc = new Calculadora(operacio, operand1, operand2);
+                        try {
+                            if (operacio.equals("/")) {
+                                System.out.println("Divisio: " + calc.divisio());
+                            }
+
+                        } catch (ArithmeticException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        if (operacio.equals("+")) {
+                            System.out.println("Suma: " + calc.suma());
+                        } else if (operacio.equals("-")) {
+                            System.out.println("Resta: " + calc.resta());
+                        } else if (operacio.equals("*")) {
+                            System.out.println("Multiplicacio: " + calc.multiplicacio());
+                        }
+
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("El numero no es enter");
+                }
+            }
+        } while (!sortir);
 
     }
 
